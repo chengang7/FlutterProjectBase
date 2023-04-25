@@ -1,4 +1,7 @@
+import 'package:my_first_flutter_app/http/core/hi_error.dart';
+import 'package:my_first_flutter_app/http/core/hi_net_adapter.dart';
 import 'package:my_first_flutter_app/http/request/base_request.dart';
+import 'package:my_first_flutter_app/logger/hi_logger.dart';
 
 class HiNet {
   HiNet._();
@@ -11,24 +14,36 @@ class HiNet {
   }
 
   Future fire(BaseRequest request) async {
-    var response = await send(request);
+    HiNetResponse response;
+    var error;
+    try {
+      response = await send(request);
+    } on HiNetError catch (e) {
+      error = e;
+      response = e.data;
+      logger.d(e.message);
+    } catch (e) {
+      //其它异常
+      error = e;
+      logger.e(e);
+    }
+
+    if (null == response) {
+      logger.d(error);
+    }
     var result = response('data');
-    printLog(result);
+    logger.d(result);
     return result;
   }
 
   Future<dynamic> send<T>(BaseRequest request) async {
-    printLog('url:${request.url()}');
-    printLog('method:${request.httpMethod()}');
+    logger.d('url:${request.url()}');
+    logger.d('method:${request.httpMethod()}');
     request.addHeader("token", "123");
-    printLog('header:${request.header}');
+    logger.d('header:${request.header}');
     return Future.value({
       "statusCode": 200,
       "data": {"code": 0, "message": "success"}
     });
-  }
-
-  void printLog(log) {
-    print('hi_net:${log.toString()}');
   }
 }

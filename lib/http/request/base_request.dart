@@ -1,4 +1,6 @@
-enum HttpMethod { GET, POST, DELETE }
+import 'package:flutter/cupertino.dart';
+
+enum HttpMethod { get, post, delete }
 
 //基础请求
 abstract class BaseRequest {
@@ -34,7 +36,7 @@ abstract class BaseRequest {
     } else {
       uri = Uri.http(authority(), pathStr, params);
     }
-    print('uri:${uri.toString()}');
+    debugPrint('uri:${uri.toString()}');
     return uri.toString();
   }
 
@@ -42,7 +44,7 @@ abstract class BaseRequest {
   bool needLogin();
 
   //参数map
-  Map<String, String> params = Map();
+  Map<String, String> params = {};
 
   /// 添加参数
   BaseRequest add(String k, Object v) {
@@ -50,7 +52,7 @@ abstract class BaseRequest {
     return this;
   }
 
-  Map<String, dynamic> header = Map();
+  Map<String, dynamic> header = {};
 
   BaseRequest addHeader(String k, Object v) {
     header[k] = v.toString();
