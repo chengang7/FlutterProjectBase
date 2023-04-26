@@ -7,7 +7,7 @@ abstract class BaseRequest {
   // curl -X GET "http://xxxx/test?requestParams=11" -H "accept: */*"
   // curl -X GET "https://xxxx/test/11" -H "accept: */*"
 
-  var pathParams;
+  dynamic pathParams;
   var useHttps = true;
 
   //域名

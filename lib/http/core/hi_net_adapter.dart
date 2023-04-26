@@ -9,13 +9,13 @@ abstract class HiNetAdapter {
 
 ///统一网络层返回格式
 class HiNetResponse<T> {
-  T data;
+  T? data;
 
-  BaseRequest request;
+  BaseRequest? request;
 
-  int statusCode; //http状态码
+  int? statusCode; //http状态码
 
-  String statusMessage;
+  String? statusMessage;
 
   dynamic extra; //其他动态的参数
 
